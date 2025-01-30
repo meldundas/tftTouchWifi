@@ -1,0 +1,365 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Name": "Screen1",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "background",
+            "Width": 320,
+            "Height": 240,
+            "RelativeFilename": "backsmall.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "temperature",
+            "X": 117,
+            "Y": 96,
+            "Width": 86,
+            "Height": 41,
+            "TextId": "__SingleUse_EWBR",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 250,
+              "Green": 242,
+              "Blue": 242
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_PZ4S",
+              "UseBuffer": true,
+              "BufferSize": 5
+            }
+          },
+          {
+            "Type": "Image",
+            "Name": "wifi0",
+            "X": 246,
+            "Y": 16,
+            "Width": 50,
+            "Height": 50,
+            "RelativeFilename": "__generated\\icon_theme_images_notification_wifi_50_50_000000.svg.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "wifi1",
+            "X": 246,
+            "Y": 16,
+            "Width": 50,
+            "Height": 50,
+            "Visible": false,
+            "RelativeFilename": "__generated\\icon_theme_images_notification_wifi_50_50_04CF95.svg.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "settingsFlexButton",
+            "X": 246,
+            "Y": 16,
+            "Width": 50,
+            "Height": 50,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 50,
+                "Height": 50,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "SettingsInteraction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "settingsFlexButton"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Settings",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "settingsBackground",
+            "Width": 320,
+            "Height": 240,
+            "RelativeFilename": "backsmall.png"
+          },
+          {
+            "Type": "ButtonWithIcon",
+            "Name": "cancelButton",
+            "X": 176,
+            "Y": 169,
+            "Width": 60,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_outline_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_outline_active.png",
+            "IconPressed": "__generated\\icon_theme_images_action_done_50_50_E8F6FB.svg.png",
+            "IconReleased": "__generated\\icon_theme_images_navigation_cancel_50_50_E8F6FB.svg.png",
+            "IconX": 5,
+            "IconY": 5,
+            "IconHeight": 50,
+            "IconWidth": 50,
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\tiny_outline_active.json"
+          },
+          {
+            "Type": "ButtonWithIcon",
+            "Name": "okButton",
+            "X": 86,
+            "Y": 169,
+            "Width": 60,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_outline_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_outline_active.png",
+            "IconPressed": "__generated\\icon_theme_images_action_done_50_50_E8F6FB.svg.png",
+            "IconReleased": "__generated\\icon_theme_images_action_done_50_50_E8F6FB.svg.png",
+            "IconX": 5,
+            "IconY": 5,
+            "IconHeight": 50,
+            "IconWidth": 50,
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\tiny_outline_active.json"
+          },
+          {
+            "Type": "RadioButton",
+            "Name": "piperButton",
+            "X": 40,
+            "Y": 32,
+            "Width": 36,
+            "Height": 36,
+            "Selected": true,
+            "FileNameSelected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_dark.png",
+            "FileNameSelectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_pressed.png",
+            "FileNameUnselected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off.png",
+            "FileNameUnselectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off_pressed.png",
+            "RadioButtonGroup": "radioButtonGroup1",
+            "Preset": "alternate_theme\\presets\\radiobutton\\radio\\medium_dark_rounded.json"
+          },
+          {
+            "Type": "RadioButton",
+            "Name": "bakeryButton",
+            "X": 40,
+            "Y": 68,
+            "Width": 36,
+            "Height": 36,
+            "FileNameSelected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_dark.png",
+            "FileNameSelectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_pressed.png",
+            "FileNameUnselected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off.png",
+            "FileNameUnselectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off_pressed.png",
+            "RadioButtonGroup": "radioButtonGroup1",
+            "Preset": "alternate_theme\\presets\\radiobutton\\radio\\medium_dark_rounded.json"
+          },
+          {
+            "Type": "RadioButton",
+            "Name": "iotButton",
+            "X": 40,
+            "Y": 104,
+            "Width": 36,
+            "Height": 36,
+            "FileNameSelected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_dark.png",
+            "FileNameSelectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_on_pressed.png",
+            "FileNameUnselected": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off.png",
+            "FileNameUnselectedPressed": "__generated\\alternate_theme_images_widgets_radiobutton_radio_medium_rounded_off_pressed.png",
+            "RadioButtonGroup": "radioButtonGroup1",
+            "Preset": "alternate_theme\\presets\\radiobutton\\radio\\medium_dark_rounded.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 86,
+            "Y": 40,
+            "Width": 50,
+            "Height": 24,
+            "TextId": "__SingleUse_JP7N",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 245,
+              "Green": 235,
+              "Blue": 235
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 84,
+            "Y": 74,
+            "Width": 110,
+            "Height": 24,
+            "TextId": "__SingleUse_KMV2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 245,
+              "Green": 235,
+              "Blue": 235
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 84,
+            "Y": 110,
+            "Width": 132,
+            "Height": 24,
+            "TextId": "__SingleUse_6HFD",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 245,
+              "Green": 233,
+              "Blue": 233
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "ipAddress",
+            "Width": 320,
+            "Height": 26,
+            "TextId": "__SingleUse_ZQAT",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 245,
+              "Green": 237,
+              "Blue": 237
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_WZ1X",
+              "UseBuffer": true,
+              "BufferSize": 20
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "cancelInteraction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "cancelButton"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Screen1"
+            }
+          },
+          {
+            "InteractionName": "piperInteraction",
+            "Trigger": {
+              "Type": "TriggerRadioButtonSelected",
+              "TriggerComponent": "piperButton"
+            },
+            "Action": {
+              "Type": "ActionExecuteCode",
+              "Code": "presenter->changeWifi('P');"
+            }
+          },
+          {
+            "InteractionName": "bakeryInteraction",
+            "Trigger": {
+              "Type": "TriggerRadioButtonSelected",
+              "TriggerComponent": "bakeryButton"
+            },
+            "Action": {
+              "Type": "ActionExecuteCode",
+              "Code": "presenter->changeWifi('B');"
+            }
+          },
+          {
+            "InteractionName": "iotInteraction",
+            "Trigger": {
+              "Type": "TriggerRadioButtonSelected",
+              "TriggerComponent": "iotButton"
+            },
+            "Action": {
+              "Type": "ActionExecuteCode",
+              "Code": "presenter->changeWifi('I');"
+            }
+          }
+        ]
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "Name": "MyApplication",
+    "Resolution": {
+      "Width": 320,
+      "Height": 240
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "Screen1",
+    "SelectedStartupLanguage": "GB",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCD16bpp"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 320,
+        "Height": 240
+      }
+    ],
+    "PhysicalButtons": [],
+    "FrameworkFeatures": {
+      "LCD16bpp": {
+        "Id": "LCD16bpp",
+        "IsEnabled": true
+      }
+    },
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Landscape",
+    "Family": "STM32F4",
+    "SubFamily": "STM32F446",
+    "Toolchain": "STM32CubeIDE",
+    "Platform": "m4",
+    "ProjectFile": "../tftTouchWifi.ioc",
+    "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
+    "OptionalComponents": [],
+    "AdditionalFeatures": []
+  },
+  "Version": "4.22.0"
+}

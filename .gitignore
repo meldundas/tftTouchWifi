@@ -1,0 +1,7 @@
+/settings_screen/
+/generated
+/build
+/simulator/msvs/.vs
+Debug/TouchGFX/generated/gui_generated/src
+Debug/TouchGFX/gui/src
+secrets.h
