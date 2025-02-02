@@ -1,0 +1,6 @@
+../Core/Src/espat.c:25:6:HAL_UARTEx_RxEventCallback	16	static
+../Core/Src/espat.c:31:5:WiFiConnect	104	static
+../Core/Src/espat.c:72:5:sendToThingspeak	200	static
+../Core/Src/espat.c:111:7:getSubstring	24	static
+../Core/Src/espat.c:155:5:getNTP	136	static
+../Core/Src/espat.c:180:5:sendToMQTT	104	static

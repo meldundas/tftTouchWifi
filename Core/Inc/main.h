@@ -91,6 +91,8 @@ void Error_Handler(void);
 #define TOUCH_INT_EXTI_IRQn EXTI15_10_IRQn
 #define DISPL_LED_Pin GPIO_PIN_6
 #define DISPL_LED_GPIO_Port GPIOC
+#define WIFI_nRST_Pin GPIO_PIN_8
+#define WIFI_nRST_GPIO_Port GPIOA
 #define DISPL_CS_Pin GPIO_PIN_11
 #define DISPL_CS_GPIO_Port GPIOA
 #define DISPL_RST_Pin GPIO_PIN_12
