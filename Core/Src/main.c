@@ -67,6 +67,10 @@ uint8_t localIP[20] = {"127.0.0.1"};
 bool connected = false;
 uint32_t count = 0;
 
+//event callback structure
+void mqttRX();
+
+const ATC_EventTypeDef events[] = { { "+MQTTSUBRECV:0", mqttRX } };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,7 +82,11 @@ void leds(char opt);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void mqttRX()
+{
 
+	printf("sub event: %s\r\n",espat.pRxBuff);
+}
 /* USER CODE END 0 */
 
 /**
@@ -119,6 +127,7 @@ int main(void)
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
   ATC_Init(&espat, &huart1, 512, "ESPAT"); //init espAT WiFi
+  ATC_SetEvents(&espat, events); //set esp callbacks
 
   Displ_Init(Displ_Orientat_90);// (mandatory) initialize display controller - set orientation parameter as per TouchGFX setup
   touchgfxSignalVSync();						// ask display syncronization
@@ -126,7 +135,7 @@ int main(void)
 
   Displ_BackLight('1');
 
-
+  subscribeToMQTT();
   /* USER CODE END 2 */
 
   /* Infinite loop */

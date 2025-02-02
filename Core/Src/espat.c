@@ -219,3 +219,48 @@ int sendToMQTT() {
 
 }
 
+int subscribeToMQTT()
+{
+	char data[80];
+//	char local_buf[80];
+
+	if (!WiFiConnect()) {
+		wifiNotConnectedCount++;
+
+		//not connected to wifi
+		return 0;
+	} else {
+
+		//setup subscribe string
+		sprintf(data, "AT+MQTTSUB=0,\"esp32c3/led\",1\r\n");
+
+		resp =
+				ATC_SendReceive(&espat,
+						"AT+MQTTUSERCFG=0,1,\"subscriber\",\"esp32c3\",\"112233\",0,0,\"\"\r\n",
+						100, NULL, 500, 1, "OK\r\n");
+
+		resp = ATC_SendReceive(&espat, "AT+MQTTCONN?\r\n", 100, NULL, 100, 1,
+				"+MQTTCONN:0,4,1");
+
+		//if not connected, try to connect
+		//setup for automatic reconnection
+		if (!resp) {
+			resp = ATC_SendReceive(&espat,
+					"AT+MQTTCONN=0,\"35.172.255.228\",1883,1\r\n", 100, NULL,
+					5000, 1, "OK\r\n");
+		}
+
+		//send MQTT
+		//1 -> OK
+		//0 -> error
+		resp = ATC_SendReceive(&espat, data, 100, NULL, 500, 1, "OK\r\n");
+
+		return resp;
+	}
+//Closing the connection makes it worse
+//	resp = ATC_SendReceive(&espat, "AT+CIPCLOSE\r\n", 1000, NULL, 100, 1, "OK\r\n");
+
+}
+
+
+

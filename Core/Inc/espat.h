@@ -22,5 +22,6 @@ int WiFiConnect();
 int sendToThingspeak();
 int getNTP();
 int sendToMQTT();
+int subscribeToMQTT();
 
 #endif /* INC_ESPAT_H_ */

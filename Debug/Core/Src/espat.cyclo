@@ -4,3 +4,4 @@
 ../Core/Src/espat.c:111:7:getSubstring	1
 ../Core/Src/espat.c:155:5:getNTP	1
 ../Core/Src/espat.c:180:5:sendToMQTT	3
+../Core/Src/espat.c:222:5:subscribeToMQTT	3
