@@ -29,11 +29,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/z_displ_ILI9XXX.h ../Core/Inc/z_touch_XPT2046.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/crc.h ../Core/Inc/dma.h \
- ../Core/Inc/spi.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../TouchGFX/App/app_touchgfx.h ../Core/Inc/thermistor.h \
+ ../Core/Inc/spi.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../TouchGFX/App/app_touchgfx.h \
+ ../Core/Inc/thermistor.h \
  ../Middlewares/Third_Party/NimaLTD_Driver/ATC/atc.h \
  ../I-CUBE-ATC/NimaLTD.I-CUBE-ATC_conf.h ../Core/Inc/espat.h \
  ../Core/Inc/secrets.h
@@ -68,6 +71,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/z_displ_ILI9XXX.h:
 ../Core/Inc/z_touch_XPT2046.h:
@@ -76,6 +81,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/crc.h:
 ../Core/Inc/dma.h:
 ../Core/Inc/spi.h:
+../Core/Inc/tim.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/gpio.h:
 ../TouchGFX/App/app_touchgfx.h:

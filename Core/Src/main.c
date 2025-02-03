@@ -24,6 +24,7 @@
 #include "crc.h"
 #include "dma.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "app_touchgfx.h"
@@ -66,7 +67,8 @@ uint32_t loopCount=0;
 uint8_t localIP[20] = {"127.0.0.1"};
 bool connected = false;
 uint32_t count = 0;
-
+bool sendNextTX=false; //send next tx
+bool validAvgTemp=false;
 //event callback structure
 void mqttRX();
 
@@ -124,8 +126,11 @@ int main(void)
   MX_SPI1_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
+  MX_TIM5_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim5);
+
   ATC_Init(&espat, &huart1, 512, "ESPAT"); //init espAT WiFi
   ATC_SetEvents(&espat, events); //set esp callbacks
 
@@ -151,6 +156,10 @@ int main(void)
 		thermValue[thermIndex] = HAL_ADC_GetValue(&hadc1);
 
 		thermIndex++;
+
+		if(thermIndex==16)
+			validAvgTemp=true;
+
 		thermIndex%=16;
 
 		thermAvg=0;
@@ -165,21 +174,23 @@ int main(void)
 
 
 
-		touchgfxSignalVSync();					// ask display syncronization
+		touchgfxSignalVSync();					// ask display synchronization
 
-		if(loopCount==0)
+
+		if(sendNextTX && validAvgTemp)//time to send next tx update and thermistorAvgdtat valid
 		{
-			if (sendToThingspeak()) {
+
+			if (sendToThingspeak()) { //retry until successful
 
 				sendToMQTT();
 
+				sendNextTX=false; //don't tx again until next tx time
 			}
 
 			count++;
-		}
+			count%=60;	//ramp graph on thingspeak
 
-		loopCount++;
-		loopCount %= 5600; //60S send UDP
+		}
 
     /* USER CODE END WHILE */
 
@@ -286,6 +297,12 @@ int __io_putchar(int ch)
 {
 	ITM_SendChar(ch);
 	return 0;
+}
+
+//timer 5 callback for 1 minute intervals
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	sendNextTX=true;
 }
 /* USER CODE END 4 */
 
