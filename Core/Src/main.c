@@ -16,6 +16,9 @@
  ******************************************************************************
  Display temperature from a thermistor on an ILI9341 TFT using TouchGFX.
  Send the Temperature every 60 Seconds to Thingspeak with a send count.
+ Send to MQTT broker. Subscribe to MQTT esp32c3/led
+ Mel Dundas
+ Feb 03, 2025
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
@@ -132,11 +135,11 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim5);
 
   ATC_Init(&espat, &huart1, 512, "ESPAT"); //init espAT WiFi
-  ATC_SetEvents(&espat, events); //set esp callbacks
+  ATC_SetEvents(&espat, events); 	//set esp callbacks
 
-  Displ_Init(Displ_Orientat_90);// (mandatory) initialize display controller - set orientation parameter as per TouchGFX setup
-  touchgfxSignalVSync();						// ask display syncronization
-  Displ_BackLight('I');  					// (mandatory) initialize backlight
+  Displ_Init(Displ_Orientat_90);	// (mandatory) initialize display controller - set orientation parameter as per TouchGFX setup
+  touchgfxSignalVSync();			// ask display syncronization
+  Displ_BackLight('I');  			// (mandatory) initialize backlight
 
   Displ_BackLight('1');
 

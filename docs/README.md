@@ -1,31 +1,60 @@
-/*
- * espat.c
- *
- *  Created on: Jan 31, 2025
- *      Author: meldundas
- */
+# ARM with ESP32-C3 AT WiFi
+## PART1: Install the library to use the ESP32AT WiFi module with the STM32.
 
-#include "espat.h"
+Nima Askari has a nice library for use with the ESP32AT modem.
 
-extern ATC_HandleTypeDef espat;
-extern uint32_t count;
-extern float thermTemp;
-extern bool connected;
+	https://github.com/nimaltd/atc
 
-int16_t resp = 0;
-uint8_t responseData[80];
+My fork of it is here: https://github.com/meldundas/atc
 
-uint16_t cipstartCount = 0;
-uint16_t notSentCount = 0;
-uint16_t sentCount = 0;
-uint16_t wifiNotConnectedCount = 0;
+![image](pics/atLibrary.png)
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
-	if (huart->Instance == USART1) {
-		ATC_IdleLineCallback(&espat, Size);
-	}
-}
+![image](pics/selectComponents.png)
 
+Click From URL below and enter the following:
+
+https://github.com/nimaltd/STM32-PACK/raw/main/ATC/NimaLTD.I-CUBE-ATC.pdsc
+
+![image](pics/packageManager.png)
+
+Click check, then OK, Then select it and click OK.
+
+![image](pics/addNewURL.png)
+
+![image](pics/icecubeATC.png)
+
+Click on the NimaLTD tab.
+
+![image](pics/NimaLTDTab.png)
+
+Click on install.
+
+![image](pics/icecubeSelected.png)
+
+### Add and Enable it.
+
+Select software packs selector and select the ATC driver.
+
+![image](pics/softwarePacksComponentSelector.png)
+
+Under Middleware, select the I-CUBE-ATC and select Driver ATC.
+
+![image](pics/middleware.png)
+### Enable UART1 and configure interrupt.
+![image](pics/enableUART.png)
+### Enable TX/RX DMA at Normal Mode.
+![image](pics/TxRxDMA.png)
+### Select 'Generate peripheral initialization as a pair of .c/.h files per peripheral' on the Code Generator Tab.
+![image](pics/projectManager.png)
+### Define a structure of ATC_HandleTypeDef.
+![image](pics/ATC_HandleTypeDef.png)
+### Add ATC_IdleLineCallback() in the Idle Line Callback.
+![image](pics/ATC_IdleLineCallback.png)
+### Call ATC_Init() and enjoy.
+![image](pics/ATC_Init.png)
+
+## PART2: Connect to WiFi
+```
 int WiFiConnect() {
 	char data[80];
 	//After 1st programming need to AT+CWMODE=1
@@ -54,19 +83,26 @@ int WiFiConnect() {
 
 			/********* AT+CWJAP="SSID","PASSWD" **********/
 			//resp: 	1 if connected
-			//			0 if not
+			//		0 if not
 			sprintf(data, "AT+CWJAP=\"%s\",\"%s\"\r\n", SSID, PASSWD);
 
-			resp = ATC_SendReceive(&espat, data, 200, NULL, 10000, 1, "OK\r\n"); //"GOT IP\r\n"
+			resp = ATC_SendReceive(&espat, data, 200, NULL, 10000, 1, "OK\r\						n"); //"GOT IP\r\n"
 		}
 
 	}
 
 	return resp;
 
-//	resp = ATC_SendReceive(&espat, "AT+CIPMUX=0\r\n", 1000, NULL, 100, 1, "OK\r\n");
 }
 
+	return resp;
+
+}
+```
+
+## PART3: Send to Thingspeak
+
+```
 int sendToThingspeak() {
 	char data[80];
 	char local_buf[80];
@@ -78,8 +114,8 @@ int sendToThingspeak() {
 		connected = true;
 		//send to thingspeak
 		resp = ATC_SendReceive(&espat,
-				"AT+CIPSTART=\"TCP\",\"184.106.153.149\",80\r\n", 500, NULL,
-				5000, 1, "OK\r\n");
+			"AT+CIPSTART=\"TCP\",\"184.106.153.149\",80\r\n", 500, NULL,
+			5000, 1, "OK\r\n");
 
 		sprintf(data, "GET /update?api_key=%s&field%d=%ld&field%d=%0.1f\r\n",
 				WRITEAPIKEY, 1, count, 2, thermTemp);
@@ -103,32 +139,13 @@ int sendToThingspeak() {
 
 }
 
-int getNTP() {
-	uint8_t data[50] = { };
-	uint8_t *myptr = data;
-	uint8_t time[50] = { };
+```
 
-	HAL_GPIO_WritePin(WIFI_nRST_GPIO_Port, WIFI_nRST_Pin, GPIO_PIN_RESET);
-	HAL_Delay(200);
-	HAL_GPIO_WritePin(WIFI_nRST_GPIO_Port, WIFI_nRST_Pin, GPIO_PIN_SET);
-	HAL_Delay(5000);
+## PART4: Send to MQTT
 
-	resp = ATC_SendReceive(&espat, "AT+CIPSNTPCFG=1,-8,\"time.google.com\"\r\n",
-			100, NULL, 5000, 1, "OK\r\n");
-
-	resp = ATC_SendReceive(&espat, "AT+CIPSNTPTIME?\r\n", 100, NULL, 5000, 2,
-			"+CIPSNTPTIME", "+TIME_UPDATED");
-
-	strcpy(responseData, espat.pRxBuff);
-
-//	copy_until_delim(time, data, resp);
-
-	return resp;
-}
-
+```
 int sendToMQTT() {
 	char data[80];
-//	char local_buf[80];
 
 	if (!WiFiConnect()) {
 		wifiNotConnectedCount++;
@@ -138,24 +155,23 @@ int sendToMQTT() {
 	} else {
 
 		//setup publish string
-		sprintf(data, "AT+MQTTPUB=0,\"esp32c3/button\",\"%0.1f\",0,0\r\n",
-				thermTemp);
+		sprintf(data, "AT+MQTTPUB=0,\"esp32c3/thermistor\",
+			\"%0.1f\",0,0\r\n",thermTemp);
 
-		resp =
-				ATC_SendReceive(&espat,
-						"AT+MQTTUSERCFG=0,1,\"publisher\",\"esp32c3\",\"112233\",0,0,\"\"\r\n",
-						100, NULL, 500, 1, "OK\r\n");
+		resp =	ATC_SendReceive(&espat,
+			"AT+MQTTUSERCFG=0,1,\"publisher\",\"esp32c3\",\"112233\",0,0,\"\"\r\n",
+			100, NULL, 500, 1, "OK\r\n");
 
 		resp = ATC_SendReceive(&espat, "AT+MQTTCONN?\r\n", 100, NULL, 100, 1,
-				"+MQTTCONN:0,4,1");
+			"+MQTTCONN:0,4,1");
 
 		//if not connected, try to connect
 		//setup for automatic reconnection
 		//broker.emqx.io
 		if (!resp) {
 			resp = ATC_SendReceive(&espat,
-					"AT+MQTTCONN=0,\"35.172.255.228\",1883,1\r\n", 100, NULL,
-					5000, 1, "OK\r\n");
+				"AT+MQTTCONN=0,\"35.172.255.228\",1883,1\r\n", 100, NULL,
+				5000, 1, "OK\r\n");
 		}
 
 		//send MQTT
@@ -165,11 +181,13 @@ int sendToMQTT() {
 
 		return resp;
 	}
-//Closing the connection makes it worse
-//	resp = ATC_SendReceive(&espat, "AT+CIPCLOSE\r\n", 1000, NULL, 100, 1, "OK\r\n");
 
 }
+```
 
+## PART5: Subscribe to MQTT
+
+```
 int subscribeToMQTT() {
 	char data[80];
 
@@ -212,3 +230,4 @@ int subscribeToMQTT() {
 
 }
 
+```
