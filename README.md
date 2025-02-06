@@ -1,4 +1,6 @@
 # tftTouchWifi
+
+![image](docs/pics/tftTouchWifiBoard.png)
 NucleoF446RE with ILI9341 and TouchGFX
 Uses the AT software on an ESP32C3 connected to UART1 on PA9 and PA10.
 WIFI_nRST on PA8.
